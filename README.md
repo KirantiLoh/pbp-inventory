@@ -33,4 +33,4 @@
     - MVT:
     - MVVM:
 
-Link: https://kirantiloh-inventory.adaptable.io
+Link: https://kirantiloh-inventory.adaptable.app
