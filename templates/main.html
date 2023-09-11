@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% load static %} {% block styles %}
+<link rel="stylesheet" href="{% static 'styles/home.css' %}" />
+{% endblock styles %} {% block content %}
+<main class="p-3 sm:p-5 flex flex-col">
+  <header class="container">
+    <h1 class="text-2xl sm:text-3xl font-medium">Welcome, {{ name }}</h1>
+    <p class="opacity-70">PBP {{ classOf }}</p>
+  </header>
+  <hr class="my-2 bg-zinc-500" />
+  <section class="">
+    <h2 class="text-xl mb-2 text-zinc-700">Here are your items</h2>
+    <ul class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      {% for item in items %}
+      <li>
+        <div class="p-3 shadow rounded-md bg-zinc-50 flex items-center justify-between">
+          <div class="">
+            <h3 class="font-medium text-lg">{{ item.name }}</h3>
+            <small class="opacity-70">Amount: {{ item.amount }}</small>
+          </div>
+          <button class="aspect-square p-1 transition-colors hover:text-sky-500"">
+            <i class="fa-regular fa-pen-to-square"></i>
+          </button>
+        </div>
+      </li>
+      {% endfor %}
+  </section>
+</main>
+{% endblock content %}
