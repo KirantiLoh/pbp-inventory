@@ -29,8 +29,8 @@
 
 ## 4. MVC vs MVT vs MVVM
 
-    - MVC:
-    - MVT:
-    - MVVM:
+    - MVC: Model mengatur bagian data dan business logic, View mengatur bagaimana data akan ditampilkan, Controller menjadi mediator antara Model dan View
+    - MVT: Model mengatur bagian data dan business logic, Template mengatur bagaimana data akan ditampilkan, View menjadi mediator antara Model dan Template. Variasi MVC dari Django.
+    - MVVM: Model mengatur bagian data dan business logic, View mengatur bagaimana data akan ditampilkan, ViewModel menjadi mediator antara Model dan Template, MVVM lebih kuat dibanding MVC karena ViewModel biasanya ada data binding yang kuat, sehingga perubahan sedikit di Model akan langsung ke-reflect di View
 
 Link: https://kirantiloh-inventory.adaptable.io

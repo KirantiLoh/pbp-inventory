@@ -9,20 +9,29 @@
   <hr class="my-2 bg-zinc-500" />
   <section class="">
     <h2 class="text-xl mb-2 text-zinc-700">Here are your items</h2>
+    {% if items %}
     <ul class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
       {% for item in items %}
       <li>
-        <div class="p-3 shadow rounded-md bg-zinc-50 flex items-center justify-between">
+        <div
+          class="p-3 shadow rounded-md bg-zinc-50 flex items-center justify-between"
+        >
           <div class="">
             <h3 class="font-medium text-lg">{{ item.name }}</h3>
             <small class="opacity-70">Amount: {{ item.amount }}</small>
           </div>
-          <button class="aspect-square p-1 transition-colors hover:text-sky-500"">
+          <button
+            class="aspect-square p-1 transition-colors hover:text-sky-500"
+          >
             <i class="fa-regular fa-pen-to-square"></i>
           </button>
         </div>
       </li>
       {% endfor %}
+    </ul>
+    {% else %}
+    <h3 class="text-lg text-zinc-700">You have no items</h3>
+    {% endif %}
   </section>
 </main>
 {% endblock content %}
