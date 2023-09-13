@@ -2,14 +2,23 @@
 <link rel="stylesheet" href="{% static 'styles/home.css' %}" />
 {% endblock styles %} {% block content %}
 <main class="p-3 sm:p-5 flex flex-col">
-  <header class="container">
-    <h1 class="text-2xl sm:text-3xl font-medium">Welcome, {{ name }}</h1>
-    <p class="opacity-70">PBP {{ classOf }}</p>
+  <header class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl sm:text-3xl font-medium">Welcome, {{ name }}</h1>
+      <p class="opacity-70">PBP {{ classOf }}</p>
+    </div>
+    <a
+      href="{% url 'Create Item' %}"
+      class="px-4 py-2 rounded transition-all bg-sky-600 text-white hover:bg-sky-700 hover:scale-105"
+      >Add Item</a
+    >
   </header>
   <hr class="my-2 bg-zinc-500" />
   <section class="">
-    <h2 class="text-xl mb-2 text-zinc-700">Here are your items</h2>
     {% if items %}
+    <h2 class="text-xl mb-2 text-zinc-700">
+      You have {{ items|length }} items
+    </h2>
     <ul class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
       {% for item in items %}
       <li>
