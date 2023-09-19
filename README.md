@@ -108,7 +108,7 @@ Langkah-langkah
 ### 9. SS Hasil Postman
 
 1. HTML
-   <image src="https://cdn.discordapp.com/attachments/877540563891654698/1151544451290898472/image.png" />
+   <image src="https://cdn.discordapp.com/attachments/877540563891654698/1153737848013463703/image.png" />
 
 2. JSON (All data)
    <image src="https://cdn.discordapp.com/attachments/877540563891654698/1151535342067908789/image.png" />

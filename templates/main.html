@@ -19,6 +19,7 @@
     <h2 class="text-xl mb-2 text-zinc-700">
       You have {{ items|length }} items
     </h2>
+    {% comment %}
     <ul class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
       {% for item in items %}
       <li>
@@ -38,6 +39,23 @@
       </li>
       {% endfor %}
     </ul>
+    {% endcomment %}
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>Amount: {{ item.amount }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     {% else %}
     <h3 class="text-lg text-zinc-700">You have no items</h3>
     {% endif %}
