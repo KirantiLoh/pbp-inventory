@@ -18,6 +18,11 @@
         </a>
     </li>
     <li>
+        <a href="#week-4">
+            Week 4
+        </a>
+    </li>
+    <li>
         <a href="#link">
             Link
         </a>
@@ -124,8 +129,45 @@ Langkah-langkah
 </section>
 
 <section id="week-4">
-</section>
 
+### 10. Apa itu Django UserCreationForm, dan jelaskan apa kelebihan dan kekurangannya?
+
+UserCreationForm adalah sebuah built-in class dalam Django yang digunakan untuk membuat user baru. UserCreationForm menyediakan field untuk username, password, dan konfirmasi password.
+Kelebihan: Penggunaannya mudah karena sudah disediakan oleh Django, sehingga tidak perlu membuat form dari awal.
+Kekurangan: Kurang fleksibel untuk kasus form registrasi yang custom
+
+### 11. Perbedaan antara autentikasi dan otorisasi dalam konteks Django, dan mengapa keduanya penting?
+
+Autentikasi: Mengenali apakah data user yang dicoba untuk diakses benar ada dan sesuai pemilik
+Otorisasi: Mengenali apakah suatu resource / data dalam database diakses oleh user yang tepat / sesuai role
+
+Keduanya penting karena keduanya mengatasi 2 aspek yang berbeda, tetapi tujuannya tetap mencegah suatu data disalahgunakan.
+
+### 12. Apa itu cookies dalam konteks aplikasi web, dan bagaimana Django menggunakan cookies untuk mengelola data sesi pengguna?
+
+Dalam konteks aplikasi web, cookies adalah suatu tempat penyimpanan data sebesar ~5KB. Django menggunakan session based authentication, dimana session dari user akan disimpan pada cookies ketika mereka login. Selama session itu masih ada di cookies dan belum expired, maka user dianggap sudah terautentikasi.
+
+### 13. Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai?
+
+Penggunaan cookies mempunyai resiko dalam segi keamanan, yakni terdapat serangan CSRF (Cross Site Request Forgery), dimana CSRF memanfaatkan cookies yang dimiliki suatu user, dan menipu user untuk melakukan suatu request pada website lain nya tetapi cookies nya terbawa ke website tersebut
+
+### 14. Cara implementasi
+
+<details>
+<summary>
+Langkah-langkah
+</summary>
+
+- Buat function `views.py` yang handle register, login, dan logout
+- Masukin ke `urls.py`
+- Edit model `Item` untuk ada field `owner` yang merupakan foreignkey ke model `User` (Saya pake yang sintaks `<nama_app>.<nama_model>`)
+- Edit function `create_item` di `views.py` untuk masukin user sebagai owner sebelum save
+- Edit context di function `index` untuk masukin data cookies yang didapatkan dari saat terakhir kali login
+- Buat function yang handle edit dan delete, dan masukin ke `urls.py`
+</details>
+
+</section>
+<br />
 <section id="link">
 
 Link: https://kirantiloh-inventory.adaptable.app
