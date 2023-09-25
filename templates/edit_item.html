@@ -3,7 +3,7 @@
 {% endblock styles %} {% block content %}
 <main class="p-3 sm:p-5 flex flex-col">
   <header class="">
-    <h1 class="text-2xl sm:text-3xl font-medium">Create New Item</h1>
+    <h1 class="text-2xl sm:text-3xl font-medium">Edit Item</h1>
     {% comment %}
     <p class="opacity-70"></p>
     {% endcomment %}
@@ -15,18 +15,15 @@
       <ul class="flex flex-col gap-3">
         <li>
           <label for="name" class="block mb-1">Name</label>
-              {{ form.name }} 
-          {{ form.name.errors|striptags }}
+          {{ form.name }} {{ form.name.errors|striptags }}
         </li>
         <li>
           <label for="description" class="block mb-1">Description</label>
-              {{ form.description }} 
-          {{ form.description.errors|striptags }}
+          {{ form.description }} {{ form.description.errors|striptags }}
         </li>
         <li>
           <label for="amount" class="block mb-1">Amount</label>
-              {{ form.amount }} 
-          {{ form.amount.errors|striptags }}
+          {{ form.amount }} {{ form.amount.errors|striptags }}
         </li>
         {{ form.non_field_errors }}
       </ul>
@@ -35,13 +32,13 @@
           type="submit"
           class="px-4 py-2 rounded transition-all bg-sky-600 text-white hover:bg-sky-700 hover:scale-105"
         >
-          Create
+          Save
         </button>
         <a
-          href="{% url 'Home' %}"
-          class="px-4 py-2 rounded transition-all text-sky-600 border border-sky-600 hover:scale-105"
+          href="{% url 'Delete Item' id %}"
+          class="px-4 py-2 rounded transition-all text-red-600 border hover:border-red-600 hover:scale-105"
         >
-          Cancel
+          Delete
         </a>
       </div>
     </form>

@@ -5,7 +5,10 @@
   <header class="flex items-center justify-between">
     <div>
       <h1 class="text-2xl sm:text-3xl font-medium">Welcome, {{ name }}</h1>
+      {% comment %}
       <p class="opacity-70">PBP {{ classOf }}</p>
+      {% endcomment %}
+      <p class="opacity-70">Last login: {{ last_login }}</p>
     </div>
     <a
       href="{% url 'Create Item' %}"
@@ -19,7 +22,6 @@
     <h2 class="text-xl mb-2 text-zinc-700">
       You have {{ items|length }} items
     </h2>
-    {% comment %}
     <ul class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
       {% for item in items %}
       <li>
@@ -30,32 +32,16 @@
             <h3 class="font-medium text-lg">{{ item.name }}</h3>
             <small class="opacity-70">Amount: {{ item.amount }}</small>
           </div>
-          <button
+          <a
+            href="{% url 'Edit Item' item.id %}"
             class="aspect-square p-1 transition-colors hover:text-sky-500"
           >
             <i class="fa-regular fa-pen-to-square"></i>
-          </button>
+          </a>
         </div>
       </li>
       {% endfor %}
     </ul>
-    {% endcomment %}
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in items %}
-        <tr>
-          <td>{{ item.name }}</td>
-          <td>Amount: {{ item.amount }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
     {% else %}
     <h3 class="text-lg text-zinc-700">You have no items</h3>
     {% endif %}

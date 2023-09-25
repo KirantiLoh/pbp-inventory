@@ -4,25 +4,35 @@ from .forms import ItemForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.core.serializers import serialize
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+import datetime
 # Create your views here.
+@login_required(login_url='Login')
 def index(request):
-    items = Item.objects.all()
+    items = Item.objects.filter(owner=request.user)
     context = {
-        "name": "Maurice Yang",
+        "name": request.user.username,
         "classOf": "D",
         "items": items,
+        'last_login': request.COOKIES['last_login'],
     }
     return render(request, "main.html", context)
 
+@login_required(login_url='Login')
 def create_item(request):
     if request.method == "POST":
         form = ItemForm(request.POST)
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            item.owner = request.user
+            item.save()
             return HttpResponseRedirect(reverse('Home'))
     else:
         form = ItemForm()
-    return render(request, "create_item.html", {"name": "Maurice Yang",
+    return render(request, "create_item.html", {"name": request.user.username,
         "classOf": "D","form": form})
 
 def all_items_json(request):
@@ -40,3 +50,62 @@ def items_by_id_json(request, id):
 def items_by_id_xml(request, id):
     item = Item.objects.filter(pk=id)
     return HttpResponse(serialize("xml", item), content_type="application/xml")
+
+def login_view(request):
+    if request.method == "POST":
+        user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
+        if user is not None:
+            login(request, user)
+            response = HttpResponseRedirect(reverse('Home'))
+            response.set_cookie('last_login', str(datetime.datetime.now()))
+            return response
+        else:
+            messages.info(request, 'Sorry, incorrect username or password. Please try again.')
+    return render(request, "login.html")
+
+def register_view(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # messages.success(request, 'Your account has been successfully created!')
+            return HttpResponseRedirect(reverse('Login'))
+    context = {'form':form}
+    return render(request, 'register.html', context)
+
+@login_required(login_url='Login')
+def logout_view(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('Login'))
+    response.delete_cookie('last_login')
+    return response
+
+@login_required(login_url='Login')
+def delete_item_view(request, id):
+    if (request.method == "DELETE"):
+        item = Item.objects.get(pk=id, owner = request.user)
+        if (item != None):
+            item.delete()
+            return HttpResponseRedirect(reverse('Home'))
+    return HttpResponseRedirect(reverse('Edit Item', args=(id,)))
+
+@login_required(login_url='Login')
+def edit_item_view(request, id):
+    item = Item.objects.get(pk=id, owner = request.user)
+    if (item != None):
+        if (request.method == "POST"):
+            form = ItemForm(request.POST, instance=item)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse('Home'))
+        else:
+            form = ItemForm(instance=item)
+        return render(request, "edit_item.html", {"name": request.user.username,
+            "classOf": "D","form": form, "id": id})
+    return HttpResponseRedirect(reverse('Home'))
+
+@login_required(login_url='Login')
+def update_item_view(request, id):
+    pass
