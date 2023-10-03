@@ -24,10 +24,9 @@
     </h2>
     <ul class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
       {% for item in items %}
-      <li>
-        <div
-          class="p-3 shadow rounded-md bg-zinc-50 flex items-center justify-between"
-        >
+      <li
+      class="last-of-type:bg-slate-500 last-of-type:text-white p-3 shadow rounded-md bg-zinc-50 flex items-center justify-between"
+      >
           <div class="">
             <h3 class="font-medium text-lg">{{ item.name }}</h3>
             <small class="opacity-70">Amount: {{ item.amount }}</small>
@@ -37,8 +36,7 @@
             class="aspect-square p-1 transition-colors hover:text-sky-500"
           >
             <i class="fa-regular fa-pen-to-square"></i>
-          </a>
-        </div>
+          </a>  
       </li>
       {% endfor %}
     </ul>

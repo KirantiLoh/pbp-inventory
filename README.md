@@ -167,6 +167,41 @@ Langkah-langkah
 </details>
 
 </section>
+<section id="week-5">
+
+### 15. Jelaskan manfaat dari setiap element selector dan kapan waktu yang tepat untuk menggunakannya.
+
+Element selector berguna ketika ingin memberikan styling yang konsisten untuk elemen tersebut secara global.
+### 16. Jelaskan HTML5 Tag yang kamu ketahui.
+- H1-H6: Buat heading / awalan 
+
+### 17. Jelaskan perbedaan antara margin dan padding.
+Padding menambahkan jarak dari konten dengan border dan background color akan di-apply ke padding.
+Margin menambahkan jarak antar elemen dan background color.
+
+TLDR: Padding buat jarak internal, margin buat jarak eksternal.
+### 18. Jelaskan perbedaan antara framework CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
+
+Bootstrap: CSS framework yang lebih condong ke design system
+Tailwind: CSS framework yang lebih berbasis utility classes
+
+Tailwind lebih bagus untuk styling yang lebih customizeable, sedangkan Bootstrap lebih bagus untuk styling yang konsisten dan lebih cepat dalam waktu pengembangan.
+### 19. Cara implementasi
+
+<details>
+<summary>
+Langkah-langkah
+</summary>
+
+- Cari inspirasi design
+- Buka docs tailwind
+- Baca2
+- Cari elemen yang mau di style
+- Taro className di elemen yang mau di style
+- Lakuin terus sampe semuanya ke-style (login, register, home)
+</details>
+
+</section>
 <br />
 <section id="link">
 
