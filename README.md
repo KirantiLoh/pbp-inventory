@@ -174,6 +174,13 @@ Langkah-langkah
 Element selector berguna ketika ingin memberikan styling yang konsisten untuk elemen tersebut secara global.
 ### 16. Jelaskan HTML5 Tag yang kamu ketahui.
 - H1-H6: Buat heading / awalan 
+- Div: Buat jd kontainer
+- Yang semantic (header, nav, footer, dll): Div cuma lebih bagus secara semantik
+- Button: Ya button
+- Input: Buat masukin input
+- Form: Biar bisa di submit isi inputnya
+- Head: Apa yg ga mau keliatan di body (script, link, title, dll)
+- A: Buat link ke page / website lain
 
 ### 17. Jelaskan perbedaan antara margin dan padding.
 Padding menambahkan jarak dari konten dengan border dan background color akan di-apply ke padding.
