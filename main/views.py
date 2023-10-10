@@ -1,14 +1,16 @@
 from django.shortcuts import render
 from .models import Item
 from .forms import ItemForm
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotAllowed, HttpResponseNotFound
 from django.urls import reverse
 from django.core.serializers import serialize
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 import datetime
+
 # Create your views here.
 @login_required(login_url='Login')
 def index(request):
@@ -84,11 +86,11 @@ def logout_view(request):
 
 @login_required(login_url='Login')
 def delete_item_view(request, id):
-    if (request.method == "DELETE"):
-        item = Item.objects.get(pk=id, owner = request.user)
-        if (item != None):
-            item.delete()
-            return HttpResponseRedirect(reverse('Home'))
+    # if (request.method == "DELETE"):
+    item = Item.objects.get(pk=id, owner = request.user)
+    if (item != None):
+        item.delete()
+        return HttpResponseRedirect(reverse('Home'))
     return HttpResponseRedirect(reverse('Edit Item', args=(id,)))
 
 @login_required(login_url='Login')
@@ -109,3 +111,33 @@ def edit_item_view(request, id):
 @login_required(login_url='Login')
 def update_item_view(request, id):
     pass
+
+
+def get_items(request):
+    if request.user == None:
+        return HttpResponseNotFound()
+    items = Item.objects.filter(owner=request.user)
+    return HttpResponse(serialize("json", items), content_type="application/json")
+
+def get_item_by_id(request, id):
+    if request.user == None:
+        return HttpResponseNotFound()
+    items = Item.objects.filter(owner=request.user, pk = id)
+    return HttpResponse(serialize("json", items), content_type="application/json")
+
+@csrf_exempt
+def create_item_ajax(request):
+    if request.user == None:
+        return HttpResponseNotFound()
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        amount = request.POST.get("amount")
+        description = request.POST.get("description")
+        user = request.user
+
+        new_product = Item(name=name, amount=amount, description=description, owner=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotAllowed()

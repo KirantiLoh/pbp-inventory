@@ -10,39 +10,161 @@
       {% endcomment %}
       <p class="opacity-70">Last login: {{ last_login }}</p>
     </div>
-    <a
+    <!-- <a
       href="{% url 'Create Item' %}"
       class="px-4 py-2 rounded transition-all bg-sky-600 text-white hover:bg-sky-700 hover:scale-105"
       >Add Item</a
+    > -->
+    <button
+    class="px-4 py-2 rounded transition-all bg-sky-600 text-white hover:bg-sky-700 hover:scale-105"
+      onclick="toggleModal()"
     >
+      Add Item
+    </button>
   </header>
   <hr class="my-2 bg-zinc-500" />
   <section class="">
-    {% if items %}
-    <h2 class="text-xl mb-2 text-zinc-700">
-      You have {{ items|length }} items
+    <h2 id="item_amount" class="text-xl mb-2 text-zinc-700">
     </h2>
-    <ul class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
-      {% for item in items %}
+    <ul class="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-4" id="cards">
+    </ul>
+  </section>
+</main>
+<div id="modal-form" style="width: 300px;" class="p-3 sm:p-5 flex flex-col transition-all duration-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 origin-center bg-white shadow-xl rounded scale-0">
+  <header class="">
+    <h1 class="text-2xl sm:text-3xl font-medium">Create New Item</h1>
+  </header>
+  <hr class="my-2 bg-zinc-500" />
+  <section class="">
+    <form id="create-form">
+      <ul class="flex flex-col gap-3">
+        <li>
+          <label for="name" class="block mb-1">Name</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              class="w-full p-2 border border-zinc-500 rounded"
+              required
+            />
+        </li>
+        <li>
+          <label for="description" class="block mb-1">Description</label>
+            <textarea
+              name="description"
+              id="description"
+              class="w-full p-2 border border-zinc-500 rounded"
+              required
+            ></textarea>
+        </li>
+        <li>
+          <label for="amount" class="block mb-1">Amount</label>
+            <input
+              type="number"
+              name="amount"
+              id="amount"
+              class="w-full p-2 border border-zinc-500 rounded"
+              required
+              min="1"
+            />
+        </li>
+      </ul>
+      <div class="flex flex-col sm:flex-row gap-4 mt-5 items-center">
+        <button
+          type="submit"
+          class="px-4 py-2 rounded transition-all bg-sky-600 text-white hover:bg-sky-700 hover:scale-105"
+        >
+          Create
+        </button>
+        <button
+          type="button"
+          onclick="toggleModal()"
+          class="px-4 py-2 rounded transition-all text-sky-600 border border-sky-600 hover:scale-105"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
+<script>
+  const cards = document.getElementById("cards");
+  const modalForm = document.getElementById("modal-form");
+  const itemAmount = document.getElementById("item_amount");
+
+  const createForm = document.getElementById("create-form");
+
+  const nameInput = document.getElementById("name");
+  const descriptionInput = document.getElementById("description");
+  const amountInput = document.getElementById("amount");
+
+  let openModal = false;
+
+  const getItems = async () => {
+    const res = await fetch("{% url 'Get Items' %}");
+    const data = await res.json();
+    return data;
+  };
+
+  const toggleModal = () => {
+    openModal = !openModal;
+    if (openModal) {
+      modalForm.classList.remove("scale-0");
+    } else {
+      modalForm.classList.add("scale-0");
+    }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!nameInput.value || !descriptionInput.value || amountInput.value == null) {
+      return;
+    }
+
+    const formData = new FormData(createForm);
+
+    formData.append("name", nameInput.value);
+    formData.append("description", descriptionInput.value);
+    formData.append("amount", Number(amountInput.value));
+
+    const res = await fetch("{% url 'Create Item AJAX' %}", {
+      method: "POST",
+      body: formData,
+    });
+    toggleModal();
+    refreshItems();
+    createForm.reset();
+  }
+
+  const refreshItems = async () => {
+    const items = await getItems();
+    cards.innerHTML = "";
+    items.forEach((item) => {
+      cards.innerHTML += `
       <li
       class="last-of-type:bg-slate-500 last-of-type:text-white p-3 shadow rounded-md bg-zinc-50 flex items-center justify-between"
       >
           <div class="">
-            <h3 class="font-medium text-lg">{{ item.name }}</h3>
-            <small class="opacity-70">Amount: {{ item.amount }}</small>
+            <h3 class="font-medium text-lg">${ item.fields.name }</h3>
+            <small class="opacity-70">Amount: ${ item.fields.amount }</small>
           </div>
           <a
-            href="{% url 'Edit Item' item.id %}"
+            href="{% url 'Edit Item' 177013 %}"
             class="aspect-square p-1 transition-colors hover:text-sky-500"
           >
             <i class="fa-regular fa-pen-to-square"></i>
           </a>  
       </li>
-      {% endfor %}
-    </ul>
-    {% else %}
-    <h3 class="text-lg text-zinc-700">You have no items</h3>
-    {% endif %}
-  </section>
-</main>
+      `.replace("177013", item.pk);
+    });
+    itemAmount.innerText = `You have ${items.length} items`;
+  }
+
+  createForm.addEventListener("submit", handleSubmit);
+
+  window.addEventListener("load", async () => {
+    refreshItems();
+  });
+</script>
 {% endblock content %}
