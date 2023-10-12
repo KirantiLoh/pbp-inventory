@@ -209,11 +209,48 @@ Langkah-langkah
 </details>
 
 </section>
+<section id="week-06">
+
+### 20. Perbedaan antara asynchronous programming dengan synchronous programming.
+
+- Sinkronus: fungsi *line per line* akan dijalankan secara berurutan dan hasilnya akan keluar secara berurutan
+- Asinkronus: Hasil dari suatu fungsi dapat muncul belakangan karena perlu melakukan hal lain seperti membuat request, kena timeout, dll
+
+### 21. Jelaskan maksud dari paradigma event driven programming dan sebutkan salah satu contoh penerapannya pada tugas ini.
+
+Javascript menggunakan konsep bahwa semua function dll berada dalam 1 buat event loop, dan ketika sesuatu dipanggil/dijalankan maka terjadilah sebuah event yang akan dihandle oleh handler functionnya.
+
+Contoh penerapannya ketika menekan tombol "Add New Item". Ketika diklik terjadi event *onclick* yang akan memanggil fungsi toggleModal. Eventnya adalah event click, sedangkan handlernya fungsi toggleModal
+
+### 22. Penerapan asynchronous programming pada AJAX.
+Namanya aja udah ada Asynchronous (Asynchronous Javascript And XML). Contohnya ketika membuat request dengan fetch atau XMLHttpRequest
+
+### 23. Bandingkanlah Fetch API dengan JQuery dan tuliskan pendapat kamu teknologi manakah yang lebih baik untuk digunakan.
+
+Kalo bisa natively supported kenapa harus pake library lain lagi? Mending pake Fetch API yang dari Javascript
+
+### 24. Cara implementasi
+
+<details>
+<summary>
+Langkah-langkah
+</summary>
+
+- Bikin fungsi di views.py untuk hasilin JSON dan masukin ke urls.py di app main
+- Bikin fungsi untuk request ke endpoint yang kasih JSON dengan Fetch API
+- Bikin fungsi untuk ubah isi dari ul#cards yang ngubah .innerHTML nya
+- Bikin fungsi di views.py untuk create item baru dengan POST request dan masukin ke urls.py di app main
+- Bikin fungsi untuk bikin POST request ke endpoint tersebut
+- Bikin modalnya dengan id modal
+- Bikin fungsi untuk toggle modalnya
+- Bikin modalnya onsubmit trigger fungsi yang buat POST request
+- Selesai
+</details>
+
+</section>
 <br />
 <section id="link">
 
 Link: https://kirantiloh-inventory.adaptable.app
 
 </section>
-#   t o - b e - r e a d  
- 
