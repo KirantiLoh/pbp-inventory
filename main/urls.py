@@ -11,6 +11,8 @@ urlpatterns = [
     path("items/<int:id>", views.get_item_by_id, name="Get Item by ID"),
 
     path("create-ajax", views.create_item_ajax, name="Create Item AJAX"),
+    path('create-flutter/', views.create_product_flutter,
+         name='create_product_flutter'),
 
     path("json", views.all_items_json, name="All Items JSON"),
     path("xml", views.all_items_xml, name="All Items XML"),
